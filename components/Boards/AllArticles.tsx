@@ -30,16 +30,16 @@ export default function AllArticles({
     orderBy: orderBy,
   })}`;
 
-  async function getArticlesByPageNum() {
-    try {
-      const { data } = await axios.get(pathName);
-      setArticles(data.list);
-    } catch (e) {
-      console.error("failed to fetch", e);
-    }
-  }
-
   useEffect(() => {
+    async function getArticlesByPageNum() {
+      try {
+        const { data } = await axios.get(pathName);
+        setArticles(data.list);
+      } catch (e) {
+        console.error("failed to fetch", e);
+      }
+    }
+
     getArticlesByPageNum();
   }, [pageNum, orderBy, keyword]);
 
