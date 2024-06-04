@@ -45,7 +45,6 @@ export default function AllArticles({
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    getArticlesByPageNum();
   };
 
   const handleChangeOrderBy = (orderBy: string) => {
