@@ -15,10 +15,9 @@ export default function Boards({ articles }: { articles: Article[] }) {
 }
 
 export async function getStaticProps() {
-  const { data } = await instance.get(
+  const { data: articles } = await instance.get(
     `/articles?page=1&pageSize=10&orderBy=recent`
   );
-  const articles: Article[] = data;
   return {
     props: {
       articles,
