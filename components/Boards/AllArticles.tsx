@@ -89,8 +89,9 @@ export default function AllArticles({
           className="text-white absolute top-auto left-2 translate-y-[45%]"
         />
         <div
-          className="w-32 h-11 px-4 border-solid border-gray-200 border-[1px] rounded-box flex justify-between items-center gap-3 relative"
+          className="w-32 h-11 px-4 border-solid border-gray-200 border-[1px] rounded-box flex justify-between items-center gap-3 relative cursor-pointer"
           ref={dropDownRef}
+          onClick={toggleDropdown}
         >
           {orderBy === "recent" ? "최신순" : "좋아요순"}
           <Image
@@ -102,7 +103,6 @@ export default function AllArticles({
             alt="게시물정렬"
             width={24}
             height={24}
-            onClick={toggleDropdown}
           />
           {showDropdown && (
             <div className="w-32 absolute top-11 left-0 border-solid border-gray-200 border-[1px] rounded-box flex flex-col">
