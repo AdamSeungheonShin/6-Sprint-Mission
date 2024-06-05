@@ -14,11 +14,11 @@ import useClickOutside from "@/hooks/useClickOutside";
 const PAGE_SIZE_MAX = 10;
 
 export default function AllArticles({
-  articleData,
+  initialData,
 }: {
-  articleData: Article[];
+  initialData: Article[];
 }) {
-  const [articles, setArticles] = useState<Article[]>([]);
+  const [articles, setArticles] = useState<Article[]>(initialData);
   const [pageNum, setPageNum] = useState<number>(1);
   const [orderBy, setOrderBy] = useState<string>("recent");
   const [keyword, setKeyword] = useState<string>("");
@@ -57,6 +57,7 @@ export default function AllArticles({
   };
 
   const dropDownRef = useRef<HTMLDivElement>(null);
+
   useClickOutside(dropDownRef, () => setShowDropdown(false));
 
   return (
