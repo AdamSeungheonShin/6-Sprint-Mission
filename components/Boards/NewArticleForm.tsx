@@ -79,6 +79,9 @@ export default function NewArticleForm() {
           value={values.content}
           onChange={handleInputChange}
         />
+        <label className="text-lg font-bold" htmlFor="image">
+          이미지
+        </label>
         <ImageInput
           name="image"
           value={values.image}
