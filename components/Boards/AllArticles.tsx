@@ -66,7 +66,7 @@ export default function AllArticles({
         <h2 className=" text-xl text-gray-900 font-bold">게시글</h2>
         <Link
           className="w-20 h-10 flex justify-center items-center bg-blue-default rounded-button text-white hover:bg-hover-blue"
-          href="/"
+          href="/boards/new"
         >
           글쓰기
         </Link>
@@ -144,18 +144,20 @@ export default function AllArticles({
                 >
                   <div className="h-16 flex justify-between">
                     <Link
-                      className="text-gray-800 font-semibold text-xl"
+                      className="text-gray-800 font-semibold text-xl hover:text-blue-600 active:text-blue-900"
                       href={`/boards/${article.id}`}
                     >
                       {article.title}
                     </Link>
                     {article.image && (
-                      <Image
-                        height={72}
-                        width={72}
-                        src={article.image}
-                        alt={article.title}
-                      />
+                      <Link href={`/boards/${article.id}`}>
+                        <Image
+                          height={72}
+                          width={72}
+                          src={article.image}
+                          alt={article.title}
+                        />
+                      </Link>
                     )}
                   </div>
                   <div className="flex text-gray-400 justify-between">
