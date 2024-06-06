@@ -1,20 +1,34 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import ImageInput from "./ImageInput";
+
+interface Values {
+  title: string;
+  content: string;
+  image: File | null;
+}
 
 export default function NewArticleForm() {
-  const [values, setValues] = useState({
+  const [values, setValues] = useState<Values>({
     title: "",
     content: "",
     image: null,
   });
 
-  const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
+  const handleChangeValues = (
+    name: string,
+    value: string | File | null
+  ): void => {
     setValues((preValues) => ({
       ...preValues,
       [name]: value,
     }));
+  };
+
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    handleChangeValues(name, value);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -65,15 +79,10 @@ export default function NewArticleForm() {
           value={values.content}
           onChange={handleInputChange}
         />
-        <label className="text-lg font-bold" htmlFor="image">
-          이미지
-        </label>
-        <input
-          className="w-72 h-72 mb-3 bg-gray-100 rounded-box"
-          placeholder="이미지등록"
-          type="file"
-          id="image"
-          name="imageForArticle"
+        <ImageInput
+          name="image"
+          value={values.image}
+          onChange={handleChangeValues}
         />
       </form>
     </>
