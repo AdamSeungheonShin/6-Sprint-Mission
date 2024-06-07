@@ -1,4 +1,5 @@
-import imgProfile from "@/public/images/skeleton_profile.png";
+import ProfileDefault from "@/public/images/profile_default.png";
+import ImageDefault from "@/public/images/img_default.png";
 import heart_active from "@/public/images/heart_active.png";
 import heart_inactive from "@/public/images/heart_inactive.png";
 import IconReturn from "@/public/icons/icon_return.svg";
@@ -8,6 +9,7 @@ import instance from "@/lib/axios";
 import { GetServerSidePropsContext } from "next";
 import { Article } from "@/types";
 import { useState } from "react";
+import formatDate from "@/utils/formatDate";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const id = context.query.id;
@@ -23,13 +25,22 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 export default function Article({ article }: { article: Article }) {
   return (
-    <div className="flex flex-col gap-16">
-      <div className="h-32 flex flex-col gap-4">
+    <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-4">
         <h2 className="text-xl font-bold text-gray-800">{article.title}</h2>
         <div className="flex gap-2 items-center">
-          <Image src={imgProfile} width={24} height={24} alt="작성자 프로필" />
-          <p className="text-sm font-normal text-gray-600">Nickname</p>
-          <p className="text-xs font-normal text-gray-400">0000. 00. 00</p>
+          <Image
+            src={ProfileDefault}
+            width={24}
+            height={24}
+            alt="작성자 프로필"
+          />
+          <p className="text-sm font-normal text-gray-600">
+            {article.writer.nickname}
+          </p>
+          <p className="text-xs font-normal text-gray-400">
+            {formatDate(article.createdAt)}
+          </p>
           <div className="w-[1px] h-full border-solid border-[1px] border-gray" />
           <Image
             src={heart_inactive}
@@ -37,10 +48,25 @@ export default function Article({ article }: { article: Article }) {
             height={24}
             alt="게시물 좋아요"
           />
-          <p className="text-sm font-normal text-gray-600">999+</p>
+          <p className="text-sm font-normal text-gray-600">
+            {article.likeCount}
+          </p>
         </div>
         <hr className="h-[1px] bg-gray-200" />
-        <p className="text-base font-normal text-gray-800">Content</p>
+        <div className="h-[600px] flex justify-between gap-10">
+          <div className="w-[600px]">
+            <Image
+              className="w-[600px] h-[600px] rounded-box object-cover"
+              src={article.image ? article.image : ImageDefault}
+              width={600}
+              height={600}
+              alt="게시글이미지"
+            />
+          </div>
+          <div className="text-base font-normal text-gray-800 w-[600px]">
+            {article.content}
+          </div>
+        </div>
       </div>
       <div>
         <div className="flex flex-col gap-4">
