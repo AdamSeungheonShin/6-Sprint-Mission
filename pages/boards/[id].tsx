@@ -9,6 +9,7 @@ import instance from "@/lib/axios";
 import { GetServerSidePropsContext } from "next";
 import { Article } from "@/types";
 import formatDate from "@/utils/formatDate";
+import CommentList from "@/components/Boards/CommentList";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const id = context.query.id;
@@ -67,7 +68,7 @@ export default function Article({ article }: { article: Article }) {
           </div>
         </div>
       </div>
-      <div>
+      <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-4">
           <label
             className="text-base font-semibold text-gray-800"
@@ -82,9 +83,9 @@ export default function Article({ article }: { article: Article }) {
             name="comment"
           />
         </div>
-        <div>Comment List</div>
+        <CommentList />
         <Link
-          className="w-60 h-12 bg-blue-default rounded-full flex justify-center items-center gap-2"
+          className="w-60 h-12 bg-blue-default rounded-full flex justify-center items-center gap-2 mx-auto"
           href="/boards"
         >
           <p className="text-base font-normal text-white">목록으로 돌아가기</p>
