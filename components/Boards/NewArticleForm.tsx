@@ -1,22 +1,26 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import ImageInput from "./ImageInput";
+import postArticle from "@/lib/postArticle";
+import { useRouter } from "next/router";
 
 interface Values {
   title: string;
   content: string;
-  image: File | null;
+  image?: File | undefined;
 }
 
 export default function NewArticleForm() {
   const [values, setValues] = useState<Values>({
     title: "",
     content: "",
-    image: null,
+    image: undefined,
   });
+
+  const router = useRouter();
 
   const handleChangeValues = (
     name: string,
-    value: string | File | null
+    value: File | string | undefined
   ): void => {
     setValues((preValues) => ({
       ...preValues,
@@ -31,12 +35,10 @@ export default function NewArticleForm() {
     handleChangeValues(name, value);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO 테스트용, 삭제예정
-    console.log(values.title);
-    console.log(values.content);
-    console.log(values.image);
+    await postArticle(values, values.image);
+    router.push("/boards");
   };
 
   return (

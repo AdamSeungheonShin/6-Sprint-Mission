@@ -8,6 +8,15 @@ export interface CommentsResponseBody {
   nextCursor: number | null;
 }
 
+export interface UserInfo {
+  id: number;
+  nickname: string;
+  image: string | null;
+  createdAt: string;
+  updatedAt: string;
+  email: string;
+}
+
 export interface Writer {
   id: number;
   nickname: string;

@@ -5,8 +5,8 @@ import IconDelete from "@/public/icons/icon_delete.svg";
 
 interface ImageInputProps {
   name: string;
-  value: File | null;
-  onChange: (name: string, value: File | null) => void;
+  value: File | undefined;
+  onChange: (name: string, value: File | undefined) => void;
 }
 
 export default function ImageInput({ name, value, onChange }: ImageInputProps) {
@@ -15,7 +15,7 @@ export default function ImageInput({ name, value, onChange }: ImageInputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const nextValue = e.target.files ? e.target.files[0] : null;
+    const nextValue = e.target.files ? e.target.files[0] : undefined;
     onChange(name, nextValue);
   };
 
@@ -24,7 +24,7 @@ export default function ImageInput({ name, value, onChange }: ImageInputProps) {
     if (!inputNode) return;
 
     inputNode.value = "";
-    onChange(name, null);
+    onChange(name, undefined);
   };
 
   useEffect(() => {
