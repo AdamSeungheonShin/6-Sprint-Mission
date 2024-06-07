@@ -7,23 +7,38 @@ import Image from "next/image";
 import Link from "next/link";
 import instance from "@/lib/axios";
 import { GetServerSidePropsContext } from "next";
-import { Article } from "@/types";
+import { Article, Comment } from "@/types";
 import formatDate from "@/utils/formatDate";
 import CommentList from "@/components/Boards/CommentList";
+
+const COMMENTS_MAX = 5;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const id = context.query.id;
 
-  const res = await instance.get(`/articles/${id}`);
-  const article = res.data ?? [];
+  const articlesRes = await instance.get(`/articles/${id}`);
+  const commentsRes = await instance.get(
+    `/articles/${id}/comments?limit=${COMMENTS_MAX}`
+  );
+
+  const article: Article = articlesRes.data ?? {};
+  const comments: Comment[] = commentsRes.data.list ?? [];
+
   return {
     props: {
       article,
+      comments,
     },
   };
 }
 
-export default function Article({ article }: { article: Article }) {
+export default function Article({
+  article,
+  comments,
+}: {
+  article: Article;
+  comments: Comment[];
+}) {
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-4">
@@ -83,7 +98,7 @@ export default function Article({ article }: { article: Article }) {
             name="comment"
           />
         </div>
-        <CommentList />
+        <CommentList comments={comments} />
         <Link
           className="w-60 h-12 bg-blue-default rounded-full flex justify-center items-center gap-2 mx-auto"
           href="/boards"
