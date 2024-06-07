@@ -116,7 +116,12 @@ export default function Article({
             onChange={handleChangeComment}
           />
           <button
-            className="w-20 h-10 flex justify-center items-center bg-gray-default rounded-button text-white ml-auto"
+            className={`w-20 h-10 flex justify-center items-center rounded-button text-white ml-auto ${
+              commentText.trim()
+                ? "bg-blue-default"
+                : "bg-gray-default cursor-not-allowed"
+            } `}
+            disabled={!commentText.trim()}
             type="submit"
             form="comment"
           >
