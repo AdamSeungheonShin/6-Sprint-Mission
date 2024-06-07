@@ -1,8 +1,9 @@
 import ProfileDefault from "@/public/images/profile_default.png";
 import EmptyComments from "@/public/images/Img_reply_empty.png";
 import { Comment } from "@/types";
-import formatDate from "@/utils/formatDate";
+
 import Image from "next/image";
+import formatTimeAgo from "@/utils/formatTimeAgo";
 
 export default function CommentList({ comments }: { comments: Comment[] }) {
   return (
@@ -22,7 +23,7 @@ export default function CommentList({ comments }: { comments: Comment[] }) {
                 <div>
                   <p className="text-gray-600">{comment.writer.nickname}</p>
                   <p className="text-gray-400">
-                    {formatDate(comment.updatedAt)}
+                    {formatTimeAgo(comment.updatedAt)}
                   </p>
                 </div>
               </div>
