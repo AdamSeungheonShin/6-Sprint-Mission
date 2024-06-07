@@ -44,7 +44,12 @@ export default function NewArticleForm() {
       <div className="h-11 flex justify-between items-center mb-6">
         <h2 className="text-xl font-bold">게시글 작성</h2>
         <button
-          className="w-20 h-10 flex justify-center items-center bg-gray-default rounded-button text-white"
+          className={`w-20 h-10 flex justify-center items-center rounded-button text-white ${
+            values.title.trim() && values.content.trim()
+              ? "bg-blue-default"
+              : "bg-gray-default cursor-not-allowed"
+          }`}
+          disabled={!values.title.trim() || !values.content.trim()}
           type="submit"
           form="article"
         >
