@@ -17,4 +17,5 @@ export interface Article {
   createdAt: string;
   updatedAt: string;
   writer: Writer;
+  isLiked: boolean;
 }

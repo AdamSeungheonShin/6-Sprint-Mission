@@ -4,12 +4,28 @@ import heart_inactive from "@/public/images/heart_inactive.png";
 import IconReturn from "@/public/icons/icon_return.svg";
 import Image from "next/image";
 import Link from "next/link";
+import instance from "@/lib/axios";
+import { GetServerSidePropsContext } from "next";
+import { Article } from "@/types";
+import { useState } from "react";
 
-export default function Article() {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const id = context.query.id;
+
+  const res = await instance.get(`/articles/${id}`);
+  const article = res.data ?? [];
+  return {
+    props: {
+      article,
+    },
+  };
+}
+
+export default function Article({ article }: { article: Article }) {
   return (
     <div className="flex flex-col gap-16">
       <div className="h-32 flex flex-col gap-4">
-        <h2 className="text-xl font-bold text-gray-800">Title</h2>
+        <h2 className="text-xl font-bold text-gray-800">{article.title}</h2>
         <div className="flex gap-2 items-center">
           <Image src={imgProfile} width={24} height={24} alt="작성자 프로필" />
           <p className="text-sm font-normal text-gray-600">Nickname</p>
