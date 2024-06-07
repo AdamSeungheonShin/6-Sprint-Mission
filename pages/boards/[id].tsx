@@ -8,7 +8,6 @@ import Link from "next/link";
 import instance from "@/lib/axios";
 import { GetServerSidePropsContext } from "next";
 import { Article } from "@/types";
-import { useState } from "react";
 import formatDate from "@/utils/formatDate";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
@@ -53,10 +52,10 @@ export default function Article({ article }: { article: Article }) {
           </p>
         </div>
         <hr className="h-[1px] bg-gray-200" />
-        <div className="h-[600px] flex justify-between gap-10">
+        <div className="h-[600px] flex justify-between gap-10 mt-8">
           <div className="w-[600px]">
             <Image
-              className="w-[600px] h-[600px] rounded-box object-cover"
+              className="w-[600px] h-[600px] rounded-box object-contain"
               src={article.image ? article.image : ImageDefault}
               width={600}
               height={600}
