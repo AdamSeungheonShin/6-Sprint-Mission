@@ -10,6 +10,7 @@ import { GetServerSidePropsContext } from "next";
 import { Article, Comment } from "@/types";
 import formatDate from "@/utils/formatDate";
 import CommentList from "@/components/Boards/CommentList";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 const COMMENTS_MAX = 5;
 
@@ -39,6 +40,17 @@ export default function Article({
   article: Article;
   comments: Comment[];
 }) {
+  const [commentText, setCommentText] = useState<string>("");
+
+  const handleChangeComment = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setCommentText(e.target.value);
+  };
+
+  const handleSubmitComment = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(commentText);
+  };
+
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-4">
@@ -84,7 +96,11 @@ export default function Article({
         </div>
       </div>
       <div className="flex flex-col gap-6">
-        <div className="flex flex-col gap-4">
+        <form
+          className="flex flex-col gap-4"
+          onSubmit={handleSubmitComment}
+          id="comment"
+        >
           <label
             className="text-base font-semibold text-gray-800"
             htmlFor="comment"
@@ -96,8 +112,17 @@ export default function Article({
             placeholder="댓글을 입력해주세요."
             id="comment"
             name="comment"
+            value={commentText}
+            onChange={handleChangeComment}
           />
-        </div>
+          <button
+            className="w-20 h-10 flex justify-center items-center bg-gray-default rounded-button text-white ml-auto"
+            type="submit"
+            form="comment"
+          >
+            등록
+          </button>
+        </form>
         <CommentList comments={comments} />
         <Link
           className="w-60 h-12 bg-blue-default rounded-full flex justify-center items-center gap-2 mx-auto"
