@@ -7,7 +7,7 @@ import iconArrow from "@/public/icons/icon_arrow_down.svg";
 import formatDate from "@/utils/formatDate";
 import heart_active from "@/public/images/heart_active.png";
 import heart_inactive from "@/public/images/heart_inactive.png";
-import imgProfile from "@/public/images/skeleton_profile.png";
+import ProfileDefault from "@/public/images/profile_default.png";
 import icon_search from "@/public/icons/icon_search.svg";
 import useClickOutside from "@/hooks/useClickOutside";
 
@@ -163,7 +163,7 @@ export default function AllArticles({
                   <div className="flex text-gray-400 justify-between">
                     <div className="flex items-center gap-2">
                       <Image
-                        src={imgProfile}
+                        src={ProfileDefault}
                         alt="testImage"
                         width={24}
                         height={24}
