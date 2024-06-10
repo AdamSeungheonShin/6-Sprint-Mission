@@ -20,6 +20,9 @@ module.exports = {
           900: "#3671FF",
           999: "#3660FF",
         },
+        gray: {
+          default: "#9CA3AF",
+        },
         hover: {
           gray: "#F3F4F6",
           blue: "#1967D6",

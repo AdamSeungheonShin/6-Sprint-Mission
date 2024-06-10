@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 
-type Func = (event: MouseEvent | TouchEvent) => void;
+type ClickOutsideHandler = (event: MouseEvent | TouchEvent) => void;
 
 export default function useClickOutside(
   ref: React.RefObject<HTMLElement>,
-  handler: Func
+  handler: ClickOutsideHandler
 ) {
   useEffect(() => {
     const listener = (event: MouseEvent | TouchEvent) => {

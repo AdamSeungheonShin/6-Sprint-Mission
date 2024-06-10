@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import imgProfile from "@/public/images/skeleton_profile.png";
+import ProfileDefault from "@/public/images/profile_default.png";
 
 export default function Navigator() {
   return (
@@ -21,7 +21,7 @@ export default function Navigator() {
           </Link>
         </div>
         <Link href="/">
-          <Image src={imgProfile} alt="testImage" width={40} height={40} />
+          <Image src={ProfileDefault} alt="testImage" width={40} height={40} />
         </Link>
       </nav>
     </>

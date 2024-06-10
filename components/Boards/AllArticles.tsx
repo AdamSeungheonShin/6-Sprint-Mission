@@ -7,18 +7,18 @@ import iconArrow from "@/public/icons/icon_arrow_down.svg";
 import formatDate from "@/utils/formatDate";
 import heart_active from "@/public/images/heart_active.png";
 import heart_inactive from "@/public/images/heart_inactive.png";
-import imgProfile from "@/public/images/skeleton_profile.png";
+import ProfileDefault from "@/public/images/profile_default.png";
 import icon_search from "@/public/icons/icon_search.svg";
 import useClickOutside from "@/hooks/useClickOutside";
 
 const PAGE_SIZE_MAX = 10;
 
 export default function AllArticles({
-  articleData,
+  initialData,
 }: {
-  articleData: Article[];
+  initialData: Article[];
 }) {
-  const [articles, setArticles] = useState<Article[]>([]);
+  const [articles, setArticles] = useState<Article[]>(initialData);
   const [pageNum, setPageNum] = useState<number>(1);
   const [orderBy, setOrderBy] = useState<string>("recent");
   const [keyword, setKeyword] = useState<string>("");
@@ -30,22 +30,21 @@ export default function AllArticles({
     orderBy: orderBy,
   })}`;
 
-  async function getArticlesByPageNum() {
-    try {
-      const { data } = await axios.get(pathName);
-      setArticles(data.list);
-    } catch (e) {
-      console.error("failed to fetch", e);
-    }
-  }
-
   useEffect(() => {
+    async function getArticlesByPageNum() {
+      try {
+        const { data } = await axios.get(pathName);
+        setArticles(data.list);
+      } catch (e) {
+        console.error("failed to fetch", e);
+      }
+    }
+
     getArticlesByPageNum();
   }, [pageNum, orderBy, keyword]);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    getArticlesByPageNum();
   };
 
   const handleChangeOrderBy = (orderBy: string) => {
@@ -58,6 +57,7 @@ export default function AllArticles({
   };
 
   const dropDownRef = useRef<HTMLDivElement>(null);
+
   useClickOutside(dropDownRef, () => setShowDropdown(false));
 
   return (
@@ -66,7 +66,7 @@ export default function AllArticles({
         <h2 className=" text-xl text-gray-900 font-bold">게시글</h2>
         <Link
           className="w-20 h-10 flex justify-center items-center bg-blue-default rounded-button text-white hover:bg-hover-blue"
-          href="/"
+          href="/boards/new"
         >
           글쓰기
         </Link>
@@ -90,8 +90,9 @@ export default function AllArticles({
           className="text-white absolute top-auto left-2 translate-y-[45%]"
         />
         <div
-          className="w-32 h-11 px-4 border-solid border-gray-200 border-[1px] rounded-box flex justify-between items-center gap-3 relative"
+          className="w-32 h-11 px-4 border-solid border-gray-200 border-[1px] rounded-box flex justify-between items-center gap-3 relative cursor-pointer"
           ref={dropDownRef}
+          onClick={toggleDropdown}
         >
           {orderBy === "recent" ? "최신순" : "좋아요순"}
           <Image
@@ -103,7 +104,6 @@ export default function AllArticles({
             alt="게시물정렬"
             width={24}
             height={24}
-            onClick={toggleDropdown}
           />
           {showDropdown && (
             <div className="w-32 absolute top-11 left-0 border-solid border-gray-200 border-[1px] rounded-box flex flex-col">
@@ -144,24 +144,26 @@ export default function AllArticles({
                 >
                   <div className="h-16 flex justify-between">
                     <Link
-                      className="text-gray-800 font-semibold text-xl"
+                      className="text-gray-800 font-semibold text-xl hover:text-blue-600 active:text-blue-900"
                       href={`/boards/${article.id}`}
                     >
                       {article.title}
                     </Link>
                     {article.image && (
-                      <Image
-                        height={72}
-                        width={72}
-                        src={article.image}
-                        alt={article.title}
-                      />
+                      <Link href={`/boards/${article.id}`}>
+                        <Image
+                          height={72}
+                          width={72}
+                          src={article.image}
+                          alt={article.title}
+                        />
+                      </Link>
                     )}
                   </div>
                   <div className="flex text-gray-400 justify-between">
                     <div className="flex items-center gap-2">
                       <Image
-                        src={imgProfile}
+                        src={ProfileDefault}
                         alt="testImage"
                         width={24}
                         height={24}
