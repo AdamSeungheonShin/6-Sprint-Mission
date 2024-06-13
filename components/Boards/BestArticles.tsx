@@ -24,7 +24,7 @@ export default function BestArticles() {
   async function getArticlesByPageNum() {
     try {
       const { data } = await axios.get(pathName);
-      setArticles(data.list);
+      setArticles(data?.list);
     } catch (e) {
       console.error("failed to fetch", e);
     }
