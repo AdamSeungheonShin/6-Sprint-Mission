@@ -8,13 +8,14 @@ export default function formatTimeAgo(dateString: string): string {
   const passedHours: number = Math.floor(passedMinutes / 60);
   const passedDays: number = Math.floor(passedHours / 24);
 
-  if (passedSeconds < 60) {
-    return `${passedSeconds}초 전`;
-  } else if (passedMinutes < 60) {
-    return `${passedMinutes}분 전`;
-  } else if (passedHours < 24) {
-    return `${passedHours}시간 전`;
-  } else {
-    return `${passedDays}일 전`;
+  switch (true) {
+    case passedSeconds < 60:
+      return `${passedSeconds}초 전`;
+    case passedMinutes < 60:
+      return `${passedMinutes}분 전`;
+    case passedHours < 24:
+      return `${passedHours}시간 전`;
+    default:
+      return `${passedDays}일 전`;
   }
 }
