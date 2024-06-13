@@ -17,13 +17,17 @@ export default function Boards({ articles }: { articles: Article[] }) {
 }
 
 export async function getServerSideProps() {
-  const { data } = await instance.get(
-    `/articles?page=${INITIAL_PAGE_NUM}&pageSize=${INITIAL_PAGE_SIZE}&orderBy=${INITIAL_ORDER}`
-  );
-  const articles: Article[] = data.list;
+  const { data } = await instance.get("/articles", {
+    params: {
+      page: INITIAL_PAGE_NUM,
+      pageSize: INITIAL_PAGE_SIZE,
+      orderBy: INITIAL_ORDER,
+    },
+  });
+
   return {
     props: {
-      articles,
+      articles: data?.list,
     },
   };
 }
