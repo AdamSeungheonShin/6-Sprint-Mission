@@ -42,3 +42,8 @@ export interface Comment {
   updatedAt: string;
   writer: Writer;
 }
+
+export interface LoginRequestBody {
+  email: string;
+  password: string;
+}
