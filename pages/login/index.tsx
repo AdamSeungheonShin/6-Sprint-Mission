@@ -4,8 +4,7 @@ import iconLogo from "@/public/icons/logo_panda.svg";
 import textLogo from "@/public/icons/logo_text.svg";
 import iconVisible from "@/public/icons/icon_visible.svg";
 import iconInvisible from "@/public/icons/icon_invisible.svg";
-import { useForm } from "react-hook-form";
-import { FormEvent, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { LoginRequestBody } from "@/types";
 import instance from "@/lib/axios";
 import { useRouter } from "next/router";
@@ -14,12 +13,16 @@ export default function Login() {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting },
-  } = useForm<LoginRequestBody>();
+    formState: { isSubmitting, errors },
+  } = useForm<LoginRequestBody>({
+    mode: "onChange",
+  });
 
   const router = useRouter();
 
-  const login = async (formData: LoginRequestBody) => {
+  const isValid: boolean = !errors.email && !errors.password;
+
+  const login: SubmitHandler<LoginRequestBody> = async (formData) => {
     try {
       const res = await instance.post("/auth/signIn", formData);
       const accessToken = res.data?.accessToken;
@@ -44,22 +47,38 @@ export default function Login() {
             이메일
           </label>
           <input
-            className="w-full h-14"
+            className={`w-full h-14 ${errors.email ? "border-red-500 border-solid border-[2px]" : ""}`}
             type="email"
             id="email"
             placeholder="이메일을 입력해주세요"
-            {...register("email")}
+            {...register("email", {
+              required: "이메일을 입력해주세요",
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: "잘못된 이메일 형식입니다",
+              },
+            })}
           />
+          {errors.email && (
+            <span className="text-red-500">{errors.email.message}</span>
+          )}
+
           <label className="text-lg font-bold" htmlFor="password">
             비밀번호
           </label>
           <div className="w-full relative">
             <input
-              className="w-full h-14"
+              className={`w-full h-14 ${errors.password ? "border-red-500 border-solid border-[2px]" : ""}`}
               type="password"
               id="password"
               placeholder="비밀번호를 입력해주세요"
-              {...register("password")}
+              {...register("password", {
+                required: "비밀번호를 입력해주세요",
+                minLength: {
+                  value: 8,
+                  message: "비밀번호를 8자 이상 입력해주세요",
+                },
+              })}
             />
             <Image
               className="absolute right-6 inset-y-0 my-auto"
@@ -69,10 +88,18 @@ export default function Login() {
               alt="비밀번호보기버튼"
             />
           </div>
+          {errors.password && (
+            <span className="text-red-500">{errors.password.message}</span>
+          )}
           <button
-            className="w-full h-14 bg-gray-100 rounded-full"
+            className={`w-full h-14 rounded-full
+            ${
+              isSubmitting || !isValid
+                ? "cursor-not-allowed bg-gray-default"
+                : "cursor-pointer bg-blue-default hover:bg-hover-blue active:bg-active-blue"
+            }`}
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || !isValid}
           >
             로그인
           </button>
