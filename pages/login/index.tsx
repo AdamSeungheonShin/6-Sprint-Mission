@@ -8,6 +8,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { LoginRequestBody } from "@/types";
 import instance from "@/lib/axios";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 export default function Login() {
   const {
@@ -21,6 +22,7 @@ export default function Login() {
   const router = useRouter();
 
   const isValid: boolean = !errors.email && !errors.password;
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const login: SubmitHandler<LoginRequestBody> = async (formData) => {
     try {
@@ -34,6 +36,8 @@ export default function Login() {
       console.error("failed to login", e);
     }
   };
+
+  const toggleShowPassword = () => setShowPassword(!showPassword);
 
   return (
     <div className="w-[640px] mx-auto">
@@ -69,7 +73,7 @@ export default function Login() {
           <div className="w-full relative">
             <input
               className={`w-full h-14 ${errors.password ? "border-red-500 border-solid border-[2px]" : ""}`}
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="password"
               placeholder="비밀번호를 입력해주세요"
               {...register("password", {
@@ -80,13 +84,18 @@ export default function Login() {
                 },
               })}
             />
-            <Image
-              className="absolute right-6 inset-y-0 my-auto"
-              src={iconInvisible}
-              width={24}
-              height={24}
-              alt="비밀번호보기버튼"
-            />
+            <button
+              className="absolute right-6 inset-y-0 my-auto hover:scale-110 active:opacity-50"
+              type="button"
+              onClick={toggleShowPassword}
+            >
+              <Image
+                src={showPassword ? iconVisible : iconInvisible}
+                width={24}
+                height={24}
+                alt="비밀번호보기버튼"
+              />
+            </button>
           </div>
           {errors.password && (
             <span className="text-red-500">{errors.password.message}</span>
