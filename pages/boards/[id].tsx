@@ -17,13 +17,15 @@ const COMMENTS_MAX = 5;
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const id = context.query.id;
 
-  const articlesRes = await instance.get(`/articles/${id}`);
-  const commentsRes = await instance.get(
-    `/articles/${id}/comments?limit=${COMMENTS_MAX}`
-  );
+  const res = await Promise.allSettled([
+    instance.get(`/articles/${id}`),
+    instance.get(`/articles/${id}/comments?limit=${COMMENTS_MAX}`),
+  ]);
 
-  const article: Article = articlesRes.data ?? {};
-  const comments: Comment[] = commentsRes.data.list ?? [];
+  const article: Article =
+    res[0].status === "fulfilled" ? res[0].value.data : {};
+  const comments: Comment[] =
+    res[1].status === "fulfilled" ? res[1].value.data.list : [];
 
   return {
     props: {
