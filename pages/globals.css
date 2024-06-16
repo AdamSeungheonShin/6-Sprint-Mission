@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  color: #1f2937;
+}
+
+input {
+  background-color: #f3f4f6;
+  border-radius: 12px;
+  padding: 16px 24px;
+}
+
+input::placeholder {
+  font-size: 16px;
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+button {
+  color: white;
+}

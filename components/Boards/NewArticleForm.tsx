@@ -42,8 +42,8 @@ export default function NewArticleForm() {
   };
 
   return (
-    <>
-      <div className="h-11 flex justify-between items-center mb-6">
+    <form className="flex flex-col gap-3" onSubmit={handleSubmit} id="article">
+      <div className="h-11 flex justify-between items-center mb-3">
         <h2 className="text-xl font-bold">게시글 작성</h2>
         <button
           className={`w-20 h-10 flex justify-center items-center rounded-button text-white ${
@@ -58,41 +58,35 @@ export default function NewArticleForm() {
           등록
         </button>
       </div>
-      <form
-        className="flex flex-col gap-3"
-        onSubmit={handleSubmit}
-        id="article"
-      >
-        <label className="text-lg font-bold" htmlFor="title">
-          *제목
-        </label>
-        <input
-          className="h-14 mb-3 px-6 py-4 bg-gray-100 rounded-box"
-          placeholder="제목을 입력해주세요"
-          type="text"
-          id="title"
-          name="title"
-          value={values.title}
-          onChange={handleInputChange}
-        />
-        <label className="text-lg font-bold" htmlFor="content">
-          *내용
-        </label>
-        <textarea
-          className="h-72 mb-3 px-6 py-4 bg-gray-100 rounded-box"
-          placeholder="내용을 입력해주세요"
-          id="content"
-          name="content"
-          value={values.content}
-          onChange={handleInputChange}
-        />
-        <h2 className="text-lg font-bold">이미지</h2>
-        <ImageInput
-          name="image"
-          value={values.image}
-          onChange={handleChangeValues}
-        />
-      </form>
-    </>
+      <label className="text-lg font-bold" htmlFor="title">
+        *제목
+      </label>
+      <input
+        className="h-14 mb-3 px-6 py-4 bg-gray-100 rounded-box"
+        placeholder="제목을 입력해주세요"
+        type="text"
+        id="title"
+        name="title"
+        value={values.title}
+        onChange={handleInputChange}
+      />
+      <label className="text-lg font-bold" htmlFor="content">
+        *내용
+      </label>
+      <textarea
+        className="h-72 mb-3 px-6 py-4 bg-gray-100 rounded-box"
+        placeholder="내용을 입력해주세요"
+        id="content"
+        name="content"
+        value={values.content}
+        onChange={handleInputChange}
+      />
+      <h2 className="text-lg font-bold">이미지</h2>
+      <ImageInput
+        name="image"
+        value={values.image}
+        onChange={handleChangeValues}
+      />
+    </form>
   );
 }
