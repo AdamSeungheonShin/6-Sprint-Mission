@@ -24,3 +24,12 @@ export const CommentListResponseSchema = z.object({
   nextCursor: z.number(),
   list: z.array(CommentSchema),
 });
+
+export type CommentListRequestSchemaType = z.infer<
+  typeof CommentListRequestSchema
+>;
+export type CommentListResponseSchemaType = z.infer<
+  typeof CommentListResponseSchema
+>;
+export type Writer = z.infer<typeof WriterSchema>;
+export type List = z.infer<typeof CommentSchema>;
