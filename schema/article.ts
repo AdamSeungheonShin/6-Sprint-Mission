@@ -2,7 +2,7 @@ import * as z from "zod";
 import createDefaultListSchema from "./list";
 
 export const WriterSchema = z.object({
-  name: z.string(),
+  nickname: z.string(),
   id: z.number(),
 });
 

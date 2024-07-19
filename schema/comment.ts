@@ -31,5 +31,6 @@ export type CommentListRequestSchemaType = z.infer<
 export type CommentListResponseSchemaType = z.infer<
   typeof CommentListResponseSchema
 >;
+export type CommentSchemaType = z.infer<typeof CommentSchema>;
 export type Writer = z.infer<typeof WriterSchema>;
 export type List = z.infer<typeof CommentSchema>;
